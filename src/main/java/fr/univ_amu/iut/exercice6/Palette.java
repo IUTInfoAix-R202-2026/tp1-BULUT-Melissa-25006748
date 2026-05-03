@@ -1,6 +1,12 @@
 package fr.univ_amu.iut.exercice6;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -60,6 +66,58 @@ public class Palette extends Application {
     // 6. Attention au format du texte du label : les tests vérifient la
     //    présence exacte des substrings "Rouge: 2", "Vert: 0", "Bleu: 1"
     //    après une séquence de clics.
+
+    BorderPane root = new BorderPane();
+
+    HBox top = new HBox(8);
+    Button btnRouge = new Button("Rouge");
+    btnRouge.setId("btn-rouge");
+    Button btnVert = new Button("Vert");
+    btnVert.setId("btn-vert");
+    Button btnBleu = new Button("Bleu");
+    btnBleu.setId("btn-bleu");
+    top.getChildren().addAll(btnRouge, btnVert, btnBleu);
+    root.setTop(top);
+
+    Pane zone = new Pane();
+    zone.setId("zone");
+    zone.setPrefSize(300, 200);
+    zone.setStyle("-fx-background-color: white;");
+    root.setCenter(zone);
+
+    Label compteurs = new Label("Rouge: 0  Vert: 0  Bleu: 0");
+    compteurs.setId("compteurs");
+    root.setBottom(compteurs);
+
+    final int[] counters = new int[3];
+
+    btnRouge.setOnAction(
+        e -> {
+          counters[0]++;
+          zone.setStyle("-fx-background-color: red;");
+          compteurs.setText(
+              "Rouge: " + counters[0] + "  Vert: " + counters[1] + "  Bleu: " + counters[2]);
+        });
+
+    btnVert.setOnAction(
+        e -> {
+          counters[1]++;
+          zone.setStyle("-fx-background-color: green;");
+          compteurs.setText(
+              "Rouge: " + counters[0] + "  Vert: " + counters[1] + "  Bleu: " + counters[2]);
+        });
+
+    btnBleu.setOnAction(
+        e -> {
+          counters[2]++;
+          zone.setStyle("-fx-background-color: blue;");
+          compteurs.setText(
+              "Rouge: " + counters[0] + "  Vert: " + counters[1] + "  Bleu: " + counters[2]);
+        });
+
+    Scene scene = new Scene(root);
+    primaryStage.setScene(scene);
+    primaryStage.show();
   }
 
   public static void main(String[] args) {
